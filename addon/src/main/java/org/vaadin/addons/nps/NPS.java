@@ -1,4 +1,4 @@
-package org.vaadin.addons.mygroup;
+package org.vaadin.addons.nps;
 
 import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.button.Button;
@@ -12,6 +12,7 @@ public class NPS extends CustomField<Integer> {
 
     private Integer score;
     private Span title;
+
     private HorizontalLayout buttons;
 
     public NPS() {
