@@ -13,7 +13,8 @@ on:
     branches: [ "v24" ]
   pull_request:
     branches: [ "v24" ]
-
+  workflow_call:
+    
 jobs:
   build:
 
