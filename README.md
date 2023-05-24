@@ -1,31 +1,39 @@
 # Vaadin Add-on example project
 
-An empty project for creating a Vaadin add-on. You should start from this project if your add-on's components are based on the existing Vaadin classes or doesn't use 3rd party JavaScript modules.
+This is a reusable NPS [Net Promoter Score](https://en.wikipedia.org/wiki/Net_promoter_score) widget. The widget displays a numeric scale typically ranging from 0 to 10, allowing users to rate their experience or likelihood to recommend on a continuum.
+
+Additionally there is a demo project that implements the full application for collecting and reporting the NPS score. This can be used as standalone application to collect user feedback. 
+This application is a runnable Spring Boot web application using Vaadin. 
+
+NPS focuses on collecting user feedback, providing you with valuable insights to gauge customer satisfaction and loyalty. While it doesn't generate reports directly, the data collected by the widget can be used to analyze and measure the overall sentiment and make informed decisions to enhance your product or service based on the feedback received. 
+
+## Project structure
+
+Project consists of two modules:
+- [addon](addon/) - Vaadin NPS component itself.
+- [demo](addon/) - Application demmostrating the usage of the component.
+
 
 ## Add-on architecture
+
+This add-on is server-side only implementation made using existing Vaadin components.
+
 ![server-side-addon](https://user-images.githubusercontent.com/991105/211870086-75544597-847d-4d21-82fa-341411753558.svg)
-
-## Alternative add-on templates
-
-If you wish to build and publish an add-on or extension in [Vaadin Directory](https://vaadin.com/directory), Vaadin provides the following three template projects:
- 1. **(this repo)** [vaadin/addon-template](https://github.com/vaadin/addon-template): Create a composite component. This Java-only template is the easiest when extending Vaadin Java components.
- 2. [vaadin/client-server-addon-template](https://github.com/vaadin/client-server-addon-template): Build a standalone, client-server TypeScript-Java component. This template provides you with a [Lit-based](https://github.com/lit/lit/) example to start with.
- 3. [vaadin/npm-addon-template](https://github.com/vaadin/npm-addon-template): Wrap a web component from [npmjs.com](https://npmjs.com/) as a Vaadin Java component.
-
 
 ## Development instructions
 
 ### Important Files 
-* TheAddon.java: this is the addon-on component class. You can add more classes if you wish, including other Components.
+* NPS.java: this is the addon-on component class. You can add more classes if you wish, including other Components.
 * TestView.java: A View class that let's you test the component you are building. This and other classes in the test folder will not be packaged during the build. You can add more test view classes in this package.
 * assembly/: this folder includes configuration for packaging the project into a JAR so that it works well with other Vaadin projects and the Vaadin Directory. There is usually no need to modify these files, unless you need to add JAR manifest entries.
 
 If you are using static resources such as images, JS (e.g. templates) and CSS files the correct location for them is under the `/src/main/resources/META-INF/resources/frontend` directory and is described here [Resource Cheat Sheet](https://vaadin.com/docs/v14/flow/importing-dependencies/tutorial-ways-of-importing.html#resource-cheat-sheet)in more details. 
 
-### Deployment
+### Running the add-on tests
 
-Starting the test/demo server:
+Starting the test server in addon module:
 ```
+cd addon
 mvn jetty:run
 ```
 
