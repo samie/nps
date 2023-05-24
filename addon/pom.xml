@@ -19,9 +19,11 @@
         <project.reporting.outputEncoding>UTF-8
         </project.reporting.outputEncoding>
     </properties>
+    
     <organization>
-        <name>###author###</name>
+        <name>Sami Ekblad</name>
     </organization>
+
     <licenses>
         <license>
             <name>Apache 2</name>
