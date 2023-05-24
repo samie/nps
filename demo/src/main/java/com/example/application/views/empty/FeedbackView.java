@@ -8,21 +8,21 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 
-@PageTitle("Empty")
-@Route(value = "")
-public class EmptyView extends VerticalLayout {
+import org.vaadin.addons.nps.NPS;
 
-    public EmptyView() {
+@PageTitle("Feedback")
+@Route(value = "")
+public class FeedbackView extends VerticalLayout {
+
+    NPS nps = new NPS();
+
+    public FeedbackView() {
         setSpacing(false);
 
-        Image img = new Image("images/empty-plant.png", "placeholder plant");
-        img.setWidth("200px");
-        add(img);
-
-        H2 header = new H2("This place intentionally left empty");
+        H2 header = new H2("Thank you for visiting us.");
         header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
         add(header);
-        add(new Paragraph("It’s a place where you can grow your own UI 🤗"));
+        add(nps);
 
         setSizeFull();
         setJustifyContentMode(JustifyContentMode.CENTER);
