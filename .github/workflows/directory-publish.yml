@@ -1,0 +1,29 @@
+name: 'Publish to the Vaadin Directory'
+
+env:
+  ADDON: nps  
+
+on:
+  release:
+    types: [published]
+  
+jobs:
+  build:
+    uses: samie/nps/.github/workflows/maven.yml@v24
+    
+  publish:
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+    - name: Rename the zip
+      id: post-process
+      run: mv target/${{env.ADDON}}*.zip ${{env.ADDON}}.zip
+    - name: Upload to Vaadin Directory
+      id: upload
+      uses: wei/curl@v1
+      continue-on-error: false  
+      with:
+        args: -X POST "https://vaadin.com/vaadincom/directory-service/upload/${{env.ADDON}}" -F "authKey=${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F "releaseNotes=test" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@${{env.ADDON}}.zip;type=application/zip"
+    - name: Report upload failure
+      if: ${{ job.status == 'failure' }}
+      run: echo '${{ toJSON(job) }}' ;  exit 1
