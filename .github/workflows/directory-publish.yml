@@ -17,7 +17,7 @@ jobs:
     steps:
     - name: Rename the zip
       id: post-process
-      run: mv target/${{env.ADDON}}*.zip ${{env.ADDON}}.zip
+      run: mv addon/target/${{env.ADDON}}*.zip ${{env.ADDON}}.zip
     - name: Upload to Vaadin Directory
       id: upload
       uses: wei/curl@v1
