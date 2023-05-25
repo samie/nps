@@ -11,8 +11,7 @@ NPS focuses on collecting user feedback, providing you with valuable insights to
 
 Project consists of two modules:
 - [addon](addon/) - Vaadin NPS component itself.
-- [demo](addon/) - Application demmostrating the usage of the component.
-
+- [demo](demo/) - Application demmostrating the usage of the component.
 
 ## Add-on architecture
 
@@ -27,9 +26,8 @@ This add-on is server-side only implementation made using existing Vaadin compon
 * TestView.java: A View class that let's you test the component you are building. This and other classes in the test folder will not be packaged during the build. You can add more test view classes in this package.
 * assembly/: this folder includes configuration for packaging the project into a JAR so that it works well with other Vaadin projects and the Vaadin Directory. There is usually no need to modify these files, unless you need to add JAR manifest entries.
 
-If you are using static resources such as images, JS (e.g. templates) and CSS files the correct location for them is under the `/src/main/resources/META-INF/resources/frontend` directory and is described here [Resource Cheat Sheet](https://vaadin.com/docs/v14/flow/importing-dependencies/tutorial-ways-of-importing.html#resource-cheat-sheet)in more details. 
 
-### Running the add-on tests
+### Mannually running the add-on tests
 
 Starting the test server in addon module:
 ```
@@ -41,17 +39,12 @@ This deploys demo at http://localhost:8080
  
 ### Integration test
 
-To run Integration Tests, execute `mvn verify -Pit,production`.
+To run Integration Tests, execute `mvn verify -Pit,production` in `addon` module.
 
 ## Publishing to Vaadin Directory
 
-You should change the `organisation.name` property in `pom.xml` to your own name/organization.
+Project uses Directory REST API to publish the addon. 
 
-```
-    <organization>
-        <name>###author###</name>
-    </organization>
-```
 
 You can create the zip package needed for [Vaadin Directory](https://vaadin.com/directory/) using
 
