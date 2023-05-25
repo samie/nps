@@ -30,7 +30,7 @@ jobs:
       run: |
         echo "Building version ${{env.RELEASE_VERSION}} of ${{env.RELEASE_NAME}}"
         ( cd addon && mvn -B install -Pdirectory --file pom.xml )
-        echo "Package $(ls -l ${{env.RELEASE_ZIP}})"
+        echo "Package ${{env.RELEASE_ZIP}}"
     - name: Upload to Vaadin Directory
       id: upload
       uses: wei/curl@v1
