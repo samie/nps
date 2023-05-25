@@ -33,7 +33,7 @@ jobs:
         echo "Building version ${{env.RELEASE_VERSION}} of ${{env.RELEASE_NAME}}"
         ( cd addon && mvn -B install -Pdirectory --file pom.xml )
         echo "Package ${{env.RELEASE_ZIP}}"
-    - name: Upload GitHub artifact
+    - name: Upload GitHub Assets
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ github.token }}
