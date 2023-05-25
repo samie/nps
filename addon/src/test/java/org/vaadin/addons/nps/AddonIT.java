@@ -1,4 +1,4 @@
-package org.vaadin.addons.mygroup;
+package org.vaadin.addons.nps;
 
 import com.vaadin.flow.component.html.testbench.DivElement;
 import org.junit.Assert;
