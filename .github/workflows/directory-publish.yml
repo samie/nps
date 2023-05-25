@@ -3,7 +3,7 @@ name: 'Publish to the Vaadin Directory'
 env:
   ADDON: nps  
   VERSION: ${{ github.ref_name }}
-  ADDON_ZIP: "addon/target/${{ADDON}}-${{VERSION}}.zip"
+  ADDON_ZIP: "addon/target/${{env.ADDON}}-${{env.VERSION}}.zip"
 
 on:
   release:
