@@ -2,8 +2,6 @@ name: 'Publish to the Vaadin Directory'
 
 env:
   ADDON: nps  
-  VERSION: ${{ github.ref_name }}
-  ADDON_ZIP: "addon/target/${{env.ADDON}}-${{env.VERSION}}.zip"
 
 on:
   release:
@@ -16,6 +14,9 @@ jobs:
   publish:
     needs: [validation-build]
     runs-on: ubuntu-latest
+    env:      
+      VERSION: ${{ github.ref_name }}
+      ADDON_ZIP: "addon/target/${{env.ADDON}}-${{ github.ref_name }}.zip"
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
@@ -27,9 +28,11 @@ jobs:
     - name: Set Version
       id: set-version
       run:  
+        echo "Creating version ${{env.VERSION}}"
         ( cd addon && mvn versions:set -DnewVersion=${{env.VERSION}} )
     - name: Build with Maven
       run: 
+        echo "Building ${{env.ADDON_ZIP}}"
         ( cd addon && mvn -B package -Pdirectory --file pom.xml )
     - name: Upload to Vaadin Directory
       id: upload
