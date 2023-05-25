@@ -47,7 +47,7 @@ jobs:
       uses: wei/curl@v1
       continue-on-error: false  
       with:
-        args: -X POST "https://vaadin.com/vaadincom/directory-service/upload/${{env.RELEASE_URL_ID}}" -F "authKey=${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F "releaseNotes=${{ github.event.release.body }}" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@${{env.RELEASE_ZIP_PATH}};type=application/zip"
+        args: -X POST "https://vaadin.com/vaadincom/directory-service/upload/${{env.RELEASE_URL_ID}}" -F authKey="${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F releaseNotes="${{ github.event.release.body }}" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@${{env.RELEASE_ZIP_PATH}};type=application/zip"
     - name: Report upload failure
       if: ${{ job.status == 'failure' }}
       run: echo '${{ toJSON(job) }}' ;  exit 1
