@@ -11,9 +11,6 @@ jobs:
   publish:
     needs: [validation-build]
     runs-on: ubuntu-latest
-    env:      
-      VERSION: ${{ github.ref_name }}
-      ADDON_ZIP: "addon/target/${{ADDON}}-${{ github.ref_name }}.zip"
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 17
