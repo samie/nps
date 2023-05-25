@@ -2,8 +2,9 @@
 
 This is a reusable NPS [Net Promoter Score](https://en.wikipedia.org/wiki/Net_promoter_score) widget. The widget displays a numeric scale typically ranging from 0 to 10, allowing users to rate their experience or likelihood to recommend on a continuum.
 
-Additionally there is a demo project that implements the full application for collecting and reporting the NPS score. This can be used as standalone application to collect user feedback. 
-This application is a runnable Spring Boot web application using Vaadin. 
+<img width="698" alt="nps-widget" src="https://github.com/samie/nps/assets/991105/6e823dfe-d730-432f-9a38-870a09d2646a">
+
+Additionally the demo project implements a full application for collecting and reporting the NPS score. This can be used as standalone application to collect user feedback. This application is a runnable Spring Boot web application using Vaadin. 
 
 NPS focuses on collecting user feedback, providing you with valuable insights to gauge customer satisfaction and loyalty. While it doesn't generate reports directly, the data collected by the widget can be used to analyze and measure the overall sentiment and make informed decisions to enhance your product or service based on the feedback received. 
 
