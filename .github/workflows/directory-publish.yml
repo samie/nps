@@ -3,7 +3,7 @@ name: 'Publish to the Vaadin Directory'
 env:
   ADDON: nps  
   VERSION: ${{ github.ref_name }}
-  ADDON_ZIP: ${{ADDON}}-${{VERSION}}.zip
+  ADDON_ZIP: "addon/target/${{ADDON}}-${{VERSION}}.zip"
 
 on:
   release:
@@ -26,15 +26,17 @@ jobs:
         cache: maven
     - name: Set Version
       id: set-version
-      run: ( cd addon && mvn versions:set -DnewVersion=${{VERSION}} )
+      run:  
+        ( cd addon && mvn versions:set -DnewVersion=${{env.VERSION}} )
     - name: Build with Maven
-      run: ( cd addon && mvn -B package -Pdirectory --file pom.xml )
+      run: 
+        ( cd addon && mvn -B package -Pdirectory --file pom.xml )
     - name: Upload to Vaadin Directory
       id: upload
       uses: wei/curl@v1
       continue-on-error: false  
       with:
-        args: -X POST "https://vaadin.com/vaadincom/directory-service/upload/${{env.ADDON}}" -F "authKey=${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F "releaseNotes=test" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@addon/target/${{env.ADDON_ZIP}}.zip;type=application/zip"
+        args: -X POST "https://vaadin.com/vaadincom/directory-service/upload/${{env.ADDON}}" -F "authKey=${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F "releaseNotes=test" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@${{env.ADDON_ZIP}}.zip;type=application/zip"
     - name: Report upload failure
       if: ${{ job.status == 'failure' }}
       run: echo '${{ toJSON(job) }}' ;  exit 1
