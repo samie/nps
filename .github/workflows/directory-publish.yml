@@ -22,21 +22,32 @@ jobs:
     - name: Initialize environment
       id: init-environment
       run: |
-       ( cd addon && mvn versions:set -DnewVersion=${{github.ref_name}} )
+       ( cd addon && mvn versions:set -DnewVersion=${{github.ref_name}} )       
         echo "RELEASE_NAME=$(cd addon && mvn help:evaluate -Dexpression=project.name -q -DforceStdout)" >> $GITHUB_ENV
         echo "RELEASE_VERSION=$(cd addon && mvn help:evaluate -Dexpression=project.version -q -DforceStdout)" >> $GITHUB_ENV
-        echo "RELEASE_ZIP=addon/target/$(cd addon && mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout).zip" >> $GITHUB_ENV
+        echo "RELEASE_ZIP=$(cd addon && mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout).zip" >> $GITHUB_ENV
+        echo "RELEASE_ZIP_PATH=addon/target/$(cd addon && mvn help:evaluate -Dexpression=project.build.finalName -q -DforceStdout).zip" >> $GITHUB_ENV
+        echo "RELEASE_URL=https://vaadin.com/vaadincom/directory-service/upload/$(cd addon && mvn help:evaluate -Dexpression=project.name -q -DforceStdout| tr -s ' ' | tr ' ' '-' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
     - name: Build with Maven
       run: |
         echo "Building version ${{env.RELEASE_VERSION}} of ${{env.RELEASE_NAME}}"
         ( cd addon && mvn -B install -Pdirectory --file pom.xml )
         echo "Package ${{env.RELEASE_ZIP}}"
+    - name: upload linux artifact
+      uses: actions/upload-release-asset@v1
+      env:
+        GITHUB_TOKEN: ${{ github.token }}
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{env.RELEASE_ZIP}}
+        asset_name: ${{env.RELEASE_NAME}}-${{env.RELEASE_VERSION}}
+        asset_content_type: application/gzip        
     - name: Upload to Vaadin Directory
       id: upload
       uses: wei/curl@v1
       continue-on-error: false  
       with:
-        args: -X POST "https://vaadin.com/vaadincom/directory-service/upload/${{env.RELEASE_NAME}}" -F "authKey=${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F "releaseNotes=test" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@${{env.RELEASE_ZIP}};type=application/zip"
+        args: -X POST "${{env.RELEASE_URL}}" -F "authKey=${{ secrets.DIRECTORY_AUTH_KEY }}" -F "publish=true" -F "releaseNotes=test" -H "accept:\ */*" -H "Content-Type:\ multipart/form-data" -F "file=@${{env.RELEASE_ZIP}};type=application/zip"
     - name: Report upload failure
       if: ${{ job.status == 'failure' }}
       run: echo '${{ toJSON(job) }}' ;  exit 1
