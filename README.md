@@ -1,4 +1,4 @@
-# Vaadin Add-on example project
+# NPS widget for Vaadin
 
 This is a reusable NPS [Net Promoter Score](https://en.wikipedia.org/wiki/Net_promoter_score) widget. The widget displays a numeric scale typically ranging from 0 to 10, allowing users to rate their experience or likelihood to recommend on a continuum.
 
