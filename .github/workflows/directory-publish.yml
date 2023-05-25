@@ -9,7 +9,7 @@ on:
   
 jobs:
   validation-build:
-    uses: samie/nps/.github/workflows/maven.yml@v24
+    uses: samie/nps/.github/workflows/validation-build.yml@v24
     
   publish:
     needs: [validation-build]
