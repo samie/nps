@@ -32,6 +32,11 @@ public class FeedbackView extends VerticalLayout {
             header.setText("Thank You");
             replace(nps, thankYou);
             add(closeLink);
+
+            // Store the results into a Google Sheet
+            FeedbackSheet feedbackSheet = new FeedbackSheet("1aTfU2_XuZU-HgUhSBu4_oB_gB4hhro-RzNsdN9_8YX8",
+                    "/workspaces/nps/.devcontainer/local/service_account_credentials.json");
+            feedbackSheet.append("" + UI.getCurrent().hashCode(), e.getValue());
         });
 
         // Styling
