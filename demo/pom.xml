@@ -4,12 +4,13 @@
     <modelVersion>4.0.0</modelVersion>
     <!-- Project from https://github.com/samie/nps -->
     <groupId>corg.vaadin.addons.nps</groupId>
-    <artifactId>nps-demo</artifactId>
-    <name>nps-demo</name>
+    <artifactId>nps-feedback</artifactId>
+    <name>nps-feedback</name>
     <version>1.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <properties>
+        <addon.version>0.9.21</addon.version>
         <java.version>17</java.version>
         <vaadin.version>24.0.5</vaadin.version>
         <selenium.version>4.8.3</selenium.version>
@@ -19,6 +20,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>3.0.6</version>
+        <relativePath></relativePath>
     </parent>
 
     <repositories>
@@ -82,14 +84,30 @@
         <dependency>
             <groupId>org.vaadin.addons.nps</groupId>
             <artifactId>nps</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${addon.version}</version>
         </dependency>
 
+        <!-- connect to google sheets -->
+        <dependency>
+            <groupId>com.google.apis</groupId>
+            <artifactId>google-api-services-sheets</artifactId>
+            <version>v4-rev612-1.25.0</version>
+        </dependency>    
+        <dependency>
+            <groupId>com.google.auth</groupId>
+            <artifactId>google-auth-library-oauth2-http</artifactId>
+            <version>1.19.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.http-client</groupId>
+            <artifactId>google-http-client-gson</artifactId>
+            <version>1.43.3</version>
+        </dependency>        
     </dependencies>
 
     <build>
         <defaultGoal>spring-boot:run</defaultGoal>
-        <plugins>
+        <plugins>    
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
