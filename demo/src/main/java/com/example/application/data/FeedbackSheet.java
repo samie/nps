@@ -95,8 +95,6 @@ public class FeedbackSheet {
     /**
      * Load and create new ServiceAccountCredential instance.
      *
-     * Loads the credentials from json file specified by
-     * <code>gapi.credentials.file.path</code>.
      * Once successfully loaded, calling this will return the same credential
      * instance.
      *
