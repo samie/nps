@@ -2,6 +2,8 @@ package org.vaadin.addons.nps;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Paragraph;
+import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
@@ -22,7 +24,10 @@ public class AddonView extends VerticalLayout {
         nps.addValueChangeListener(e -> {
             Notification.show("Value changed from " + e.getOldValue() + " to " + e.getValue());
             add(new Paragraph("NPS: " + e.getOldValue() + " -> " + e.getValue()));
-            remove(nps);
+            Icon vaadinIcon = new Icon(VaadinIcon.SMILEY_O);
+            Icon vaadinIcon = new Icon(VaadinIcon.SA);
+            add(lumoIcon, vaadinIcon);
+            replace(nps, new Paragraph("You gave "+e.getValue()+". Thank you for your feedback."));
         });
 
         // Edit the the score
