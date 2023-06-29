@@ -4,6 +4,7 @@ demo/target/
 .settings
 .project
 .classpath
+local 
 
 *.iml
 .DS_Store
