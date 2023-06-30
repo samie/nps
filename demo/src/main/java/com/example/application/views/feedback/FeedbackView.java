@@ -1,4 +1,4 @@
-package com.example.application.views.empty;
+package com.example.application.views.feedback;
 
 import com.example.application.data.FeedbackSheet;
 import com.vaadin.flow.component.UI;
