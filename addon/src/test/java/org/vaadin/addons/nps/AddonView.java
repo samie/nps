@@ -24,9 +24,9 @@ public class AddonView extends VerticalLayout {
         nps.addValueChangeListener(e -> {
             Notification.show("Value changed from " + e.getOldValue() + " to " + e.getValue());
             add(new Paragraph("NPS: " + e.getOldValue() + " -> " + e.getValue()));
-            Icon vaadinIcon = new Icon(VaadinIcon.SMILEY_O);
-            Icon vaadinIcon = new Icon(VaadinIcon.SA);
-            add(lumoIcon, vaadinIcon);
+            Icon icon1 = new Icon(VaadinIcon.THUMBS_UP);
+            Icon icon2 = new Icon(VaadinIcon.THUMBS_DOWN);
+            add(icon1, icon2);
             replace(nps, new Paragraph("You gave "+e.getValue()+". Thank you for your feedback."));
         });
 
