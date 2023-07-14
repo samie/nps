@@ -1,9 +1,10 @@
 package com.example.application;
 
 import com.vaadin.flow.component.page.AppShellConfigurator;
-import com.vaadin.flow.theme.Theme;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+import org.springframework.aot.hint.RuntimeHintsRegistrar;
 
 import com.vaadin.flow.server.PWA;
 
@@ -15,7 +16,6 @@ import com.vaadin.flow.server.PWA;
  *
  */
 @SpringBootApplication
-@Theme(value = "nps")
 @PWA(shortName = "Feedback", name = "Feedback")
 public class Application implements AppShellConfigurator {
 
