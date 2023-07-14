@@ -76,4 +76,20 @@ public class NPS extends CustomField<Integer> {
                 .forEach(c -> ((Button) c).setEnabled(!readOnly));
     }
 
+    public Integer getScore() {
+        return getValue();
+    }
+
+    public void setScore(Integer score) {
+        setValue(score);
+    }
+
+    public String getTitle() {
+        return title.getText();
+    }
+
+    public void setTitle(String title) {
+        this.title.setText(title);;
+    }
+    
 }
