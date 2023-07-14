@@ -21,8 +21,10 @@ public class FeedbackView extends VerticalLayout {
     Paragraph thankYou = new Paragraph("We appreciate your feedback.");
     Anchor closeLink = new Anchor("https://vaadin.com/", "Go back to vaadin.com");
 
-    public FeedbackView() {
+    String productName;
 
+    public FeedbackView() {
+        
         // Add all views
         add(header);
         add(nps);
@@ -48,4 +50,15 @@ public class FeedbackView extends VerticalLayout {
         nps.setClassName("nps");
     }
 
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
+
+
+    
 }
