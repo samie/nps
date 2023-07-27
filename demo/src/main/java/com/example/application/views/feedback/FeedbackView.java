@@ -59,6 +59,21 @@ public class FeedbackView extends VerticalLayout {
         this.productName = productName;
     }
 
+    public String getHeader() {
+        return this.header.getText();
+    }
+
+    public void setHeader(String header) {
+        this.header.setText(header);
+    }
+
+    public String getQuestion() {
+        return this.nps.getTitle();
+    }
+
+    public void setQuestion(String title) {
+        this.nps.setTitle(title);
+    }
 
     
 }
