@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Embedding NPS Example</title>
+    </head>
+    <body>
+        <h1>Welcome to My Web Page</h1>
+        <p>This is an example of a web page using an embedding script.</p>
+        <button id="feedback-button">Give us feedback</button>
+        <!-- Include the NPS and add click handler to button -->
+        <script type="module">
+            import {createNpsPopup, openNpsPopup} from './nps.js';
+            createNpsPopup("vaadin.com", 
+                "Thank you for visiting us", 
+                "How likely would you recommend our services?");
+            document.querySelector("#feedback-button").addEventListener('click',openNpsPopup);
+        </script>
+    </body>
+</html>
