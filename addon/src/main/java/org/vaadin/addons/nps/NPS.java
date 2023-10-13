@@ -10,16 +10,19 @@ import com.vaadin.flow.theme.lumo.LumoUtility;
 
 public class NPS extends CustomField<Integer> {
 
+    public static final String VERY_LIKELY = "Very likely";
+    public static final String NOT_LIKELY = "Not likely";
+    public static final String DEFAULT_NPS_QUESTION = "On a scale of 0 to 10, how likely would you recommend this to your friend or colleague?";
+    
     private Integer score;
     private Span title;
 
     private HorizontalLayout buttons;
 
     public NPS() {
-        this.title = new Span(
-                "On a scale of 0 to 10, how likely would you recommend this to your friend or colleague?");
+        this.title = new Span(DEFAULT_NPS_QUESTION);
         this.buttons = new HorizontalLayout();
-        buttons.add(new Text("Not likely"));
+        buttons.add(new Text(NOT_LIKELY));
         for (int i = 0; i <= 10; i++) {
             Button button = new Button(String.valueOf(i), e -> {
                 this.score = Integer.parseInt(e.getSource().getText());
@@ -33,7 +36,7 @@ public class NPS extends CustomField<Integer> {
                     .set("max-width", " var(--lumo-button-size)");
             buttons.add(button);
         }
-        buttons.add(new Text("Very likely"));
+        buttons.add(new Text(VERY_LIKELY));
         this.add(title, buttons);
 
         this.getStyle().set("text-align", "center");
