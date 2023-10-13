@@ -57,10 +57,10 @@ public class FeedbackSheet {
      * @param anonymousUserId Unique but anonymous I
      * @param score           NPS score
      */
-    public void append(String anonymousUserId, int score) {
+    public void append(String product, String anonymousUserId, int score) {
         try {
             List<List<Object>> values = Arrays.asList(
-                    Arrays.asList(LocalDateTime.now().toString(), anonymousUserId, score));
+                    Arrays.asList(LocalDateTime.now().toString(), product, anonymousUserId, score));
 
             ValueRange newEntry = new ValueRange().setValues(values);
             Sheets service = getSheetsService();

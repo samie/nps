@@ -1,13 +1,13 @@
 
-function importNpsElement() {
+function importCustomElement() {
     
-    // Import web component if needed
-    var npsImport = document.head.querySelector("#nps-element-import");
+    // Import web component exported by CustomElementExporter
+    var npsImport = document.head.querySelector("#exported-element-import");
     if (!npsImport) {
         npsImport = document.createElement("script");
-        npsImport.id = "nps-element-import";
+        npsImport.id = "exported-element-import";
         npsImport.type = "module";
-        npsImport.src ="./web-component/nps-feedback.js"
+        npsImport.src ="./web-component/nps-feedback.js" // This should match the tag
         document.head.appendChild(npsImport);
     }
 
@@ -15,7 +15,7 @@ function importNpsElement() {
 
 function importNpsPopupCss() {
 
-        // Create and append style element
+        // Create and append style element for the popup
         var style = document.head.querySelector("#nps-css");
         if (!style) {
             style = document.createElement('link');
@@ -26,9 +26,9 @@ function importNpsPopupCss() {
         }
 }
 
-function createNpsPopup(product, header, question) {
+function createNpsPopup(product, header, question, link, linkText) {
 
-    // Create popup and append
+    // Create popup HTML and append to the end of the document
     const popupHTML = `
         <div id="nps-popup">
             <span id="nps-close">&times;</span>
@@ -39,13 +39,19 @@ function createNpsPopup(product, header, question) {
     // Pass parameters
     const nps = document.body.querySelector('#nps-widget');
     if (nps && product) {
-        nps.setAttribute("product",product);
+        nps.product = product;
     }    
     if (nps && header) {
-        nps.setAttribute("header",header);
+        nps.header = header;
     }
     if (nps && question) {
         nps.question = question;
+    }
+    if (nps && link) {
+        nps.link = link;
+    }
+    if (nps && linkText) {
+        nps.linktext = linkText;
     }
 
     // Click to open
@@ -79,10 +85,9 @@ function closeNpsPopup() {
 
 // Init NPS widget
 function initNps() {
-    importNpsElement();
+    importCustomElement();
     importNpsPopupCss();
 }
-
 initNps();
 
 export {createNpsPopup, openNpsPopup, closeNpsPopup};
