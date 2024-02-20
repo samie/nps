@@ -26,3 +26,11 @@ addon/error-screenshots/
 addon/webpack.generated.js
 demo/error-screenshots/
 demo/webpack.generated.js
+addon/pom.xml.versionsBackup
+demo/frontend/web-component.html
+demo/src/main/bundles/dev.bundle
+demo/src/main/bundles/README.md
+demo/package.json
+demo/tsconfig.json
+demo/types.d.ts
+demo/vite.config.ts
