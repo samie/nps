@@ -17,8 +17,9 @@
     <body>
         <h1>Welcome to My Web Page</h1>
         <p>This is an example of a web page using an embedding script.</p>
-        <button id="feedback-example-button">Open NPS feedback</button>
+
         <!-- Include the NPS and add click handler to button -->
+        <button id="feedback-example-button">Open NPS feedback</button>
         <script type="module">
             import {createNpsPopup, openNpsPopup, closeNpsPopup} from './nps.js';
 
@@ -33,6 +34,11 @@
 
             // Add click listener for the button
             document.querySelector("#feedback-example-button").addEventListener('click',openNpsPopup);
-        </script>
+        </script> 
+
+        <!-- Include the NPS diectly to the web page 
+        <script type="module" src="./web-component/nps-feedback.js"></script>
+        <nps-feedback id="nps-web-component" product="page" header="Thanks for being here" question="How like you are to come back?"></nps-feedback>
+         --> 
     </body>
 </html>
