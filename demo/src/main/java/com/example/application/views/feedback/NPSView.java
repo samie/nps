@@ -10,6 +10,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.lumo.LumoUtility.Margin;
 
+import java.io.File;
+
 import org.vaadin.addons.nps.NPS;
 
 @PageTitle("Feedback")
@@ -21,6 +23,11 @@ public class NPSView extends VerticalLayout {
     public static final String DEFAULT_HEADER = "Thank you for visiting us.";
     public static final String DEFAULT_QUESTION = NPS.DEFAULT_NPS_QUESTION;
     public static final String DEFAULT_THANK_YOU = "Thank you. We appreciate your feedback.";
+
+    private static final String PRODUCTION_CREDENTIAL_FILE = "/local/nps-feedback-demo";
+    private static final String DEVELOPMENT_CREDENTIAL_FILE = "/workspaces/nps/.devcontainer/local/service_account_credentials.json";
+
+    private static final String DEFAULT_SHEET_ID = "1aTfU2_XuZU-HgUhSBu4_oB_gB4hhro-RzNsdN9_8YX8";
 
     NPS nps = new NPS();
     H2 header = new H2(DEFAULT_HEADER);
@@ -42,9 +49,11 @@ public class NPSView extends VerticalLayout {
             replace(nps, thankYou);
             add(closeLink);
 
+            String credentialFileName = getCredentialFileName();
+            String sheetId = getSheetId();
             // Store the results into a Google Sheet
-            FeedbackSheet feedbackSheet = new FeedbackSheet("1aTfU2_XuZU-HgUhSBu4_oB_gB4hhro-RzNsdN9_8YX8",
-                    "/workspaces/nps/.devcontainer/local/service_account_credentials.json");
+            FeedbackSheet feedbackSheet = new FeedbackSheet(sheetId,
+                    credentialFileName);
             feedbackSheet.append(productName,"" + UI.getCurrent().hashCode(), e.getValue());
         });
 
@@ -52,6 +61,28 @@ public class NPSView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setDefaultHorizontalComponentAlignment(Alignment.CENTER);
         header.addClassNames(Margin.Top.XLARGE, Margin.Bottom.MEDIUM);
+    }
+
+    /** Get the ID of the Google Sheet where to store the results.
+     * 
+     * @return  
+    */
+    protected String getSheetId() {
+        return DEFAULT_SHEET_ID;
+    }
+
+    /** Find the name of credential file used to authenticate to Google Sheets.
+     * 
+     * By default we use Google Secret Manager to mount file in Cloud Run and local directory 
+     * in development.
+     * 
+     */
+    protected String getCredentialFileName() {
+
+        // Try production location first
+        File  f = new File(PRODUCTION_CREDENTIAL_FILE);
+        if (f.exists() && f.canRead()) return PRODUCTION_CREDENTIAL_FILE;
+        return DEVELOPMENT_CREDENTIAL_FILE;
     }
 
     public String getProductName() {
