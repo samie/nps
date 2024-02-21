@@ -110,16 +110,14 @@ public class FeedbackSheet {
             return this.loadedCredentials;
         }
 
-        InputStream in = new FileInputStream(credentialsFilePath);
-        if (in == null) {
-            throw new FileNotFoundException("Credentials not found: " + credentialsFilePath);
-        }
+        try (InputStream in = new FileInputStream(credentialsFilePath)) {
+            this.loadedCredentials = (ServiceAccountCredentials) ServiceAccountCredentials
+                    .fromStream(new FileInputStream(credentialsFilePath))
+                    .createScoped(AUTH_SCOPES);
+            this.loadedCredentials.refresh();
+            return this.loadedCredentials;
+        } 
 
-        this.loadedCredentials = (ServiceAccountCredentials) ServiceAccountCredentials
-                .fromStream(new FileInputStream(credentialsFilePath))
-                .createScoped(AUTH_SCOPES);
-        this.loadedCredentials.refresh();
-        return this.loadedCredentials;
     }
 
 }
