@@ -9,6 +9,8 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
@@ -18,12 +20,12 @@ import com.google.api.services.sheets.v4.SheetsScopes;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 
-/* Class to store feedack into a Google Sheet. 
- * 
- * This needs a Google Service Account to be set up first and give 'editor' 
+/* Class to store feedack into a Google Sheet.
+ *
+ * This needs a Google Service Account to be set up first and give 'editor'
  * permissions to that account in the specified sheet.
- * 
- * 
+ *
+ *
  */
 public class FeedbackSheet {
 
@@ -35,43 +37,51 @@ public class FeedbackSheet {
 
     private static final GsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
+    private static final ExecutorService executor = Executors.newSingleThreadExecutor();
+
     private String credentialsFilePath;
     private ServiceAccountCredentials loadedCredentials;
     private Sheets loadedService;
 
     private String sheetId;
 
-    public FeedbackSheet(String sheetId, String credentialsFilePath) {
+    private FeedbackSheet(String sheetId, String credentialsFilePath) {
         this.sheetId = sheetId;
         this.credentialsFilePath = credentialsFilePath;
     }
 
+    public static FeedbackSheet getSheet(String sheetId, String credentialsFilePath) {
+        return new FeedbackSheet(sheetId, credentialsFilePath);
+    }
+
     /**
      * Append a user score to the spreadsheet.
-     * 
+     * <p>
      * Adds a new row in the first sheet in a Google Spreadsheet
      * with timestamp userId and given NPS score.
-     * 
+     *
      * <code>2023-06-26 11:09:44,1687640813,	10</code>
-     * 
+     *
      * @param anonymousUserId Unique but anonymous I
      * @param score           NPS score
      */
     public void append(String product, String anonymousUserId, int score) {
-        try {
-            List<List<Object>> values = Arrays.asList(
-                    Arrays.asList(LocalDateTime.now().toString(), product, anonymousUserId, score));
+        executor.submit(() -> {
+            try {
+                List<List<Object>> values = Arrays.asList(
+                        Arrays.asList(LocalDateTime.now().toString(), product, anonymousUserId, score));
 
-            ValueRange newEntry = new ValueRange().setValues(values);
-            Sheets service = getSheetsService();
-            service.spreadsheets().values()
-                    .append(this.sheetId, RANGE, newEntry)
-                    .setValueInputOption("USER_ENTERED")
-                    .setAccessToken(getCredentials().getAccessToken().getTokenValue())
-                    .execute();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to append Google Sheet", e);
-        }
+                ValueRange newEntry = new ValueRange().setValues(values);
+                Sheets service = getSheetsService();
+                service.spreadsheets().values()
+                        .append(this.sheetId, RANGE, newEntry)
+                        .setValueInputOption("USER_ENTERED")
+                        .setAccessToken(getCredentials().getAccessToken().getTokenValue())
+                        .execute();
+            } catch (Exception e) {
+                throw new RuntimeException("Failed to append Google Sheet", e);
+            }
+        });
     }
 
     /**
@@ -94,7 +104,7 @@ public class FeedbackSheet {
 
     /**
      * Load and create new ServiceAccountCredential instance.
-     *
+     * <p>
      * Once successfully loaded, calling this will return the same credential
      * instance.
      *
@@ -116,7 +126,7 @@ public class FeedbackSheet {
                     .createScoped(AUTH_SCOPES);
             this.loadedCredentials.refresh();
             return this.loadedCredentials;
-        } 
+        }
 
     }
 

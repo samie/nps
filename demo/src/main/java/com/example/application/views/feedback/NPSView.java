@@ -49,12 +49,9 @@ public class NPSView extends VerticalLayout {
             replace(nps, thankYou);
             add(closeLink);
 
-            String credentialFileName = getCredentialFileName();
-            String sheetId = getSheetId();
             // Store the results into a Google Sheet
-            FeedbackSheet feedbackSheet = new FeedbackSheet(sheetId,
-                    credentialFileName);
-            feedbackSheet.append(productName,"" + UI.getCurrent().hashCode(), e.getValue());
+            FeedbackSheet.getSheet(getSheetId(), getCredentialFileName())
+                    .append(productName,"" + UI.getCurrent().hashCode(), e.getValue());
         });
 
         // Styling
