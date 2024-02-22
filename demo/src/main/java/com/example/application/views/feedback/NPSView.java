@@ -18,7 +18,7 @@ import org.vaadin.addons.nps.NPS;
 @Route(value = "")
 public class NPSView extends VerticalLayout {
 
-    public static final String DEFAULT_LINK_TEXT = "Go back to vaadin.com";
+    public static final String DEFAULT_LINK_TEXT = "Visit vaadin.com";
     public static final String DEFAULT_LINK = "https://vaadin.com/";
     public static final String DEFAULT_HEADER = "Thank you for visiting us.";
     public static final String DEFAULT_QUESTION = NPS.DEFAULT_NPS_QUESTION;
@@ -28,11 +28,14 @@ public class NPSView extends VerticalLayout {
     private static final String DEVELOPMENT_CREDENTIAL_FILE = "/workspaces/nps/.devcontainer/local/service_account_credentials.json";
 
     private static final String DEFAULT_SHEET_ID = "1aTfU2_XuZU-HgUhSBu4_oB_gB4hhro-RzNsdN9_8YX8";
+    private static final String SHEET_LINK = "https://docs.google.com/spreadsheets/d/1aTfU2_XuZU-HgUhSBu4_oB_gB4hhro-RzNsdN9_8YX8";
+    private static final String SHEET_LINK_TEXT = "See responses";
 
     NPS nps = new NPS();
     H2 header = new H2(DEFAULT_HEADER);
     Paragraph thankYou = new Paragraph(DEFAULT_THANK_YOU);
     Anchor closeLink = new Anchor(DEFAULT_LINK, DEFAULT_LINK_TEXT);
+    Anchor sheetLink = new Anchor(SHEET_LINK, SHEET_LINK_TEXT);
 
     String productName = "default";
 
@@ -47,11 +50,15 @@ public class NPSView extends VerticalLayout {
         nps.addValueChangeListener(e -> {
             header.setVisible(false);
             replace(nps, thankYou);
+            add(sheetLink);
             add(closeLink);
 
+            String credentialFileName = getCredentialFileName();
+            String sheetId = getSheetId();
             // Store the results into a Google Sheet
-            FeedbackSheet.getSheet(getSheetId(), getCredentialFileName())
-                    .append(productName,"" + UI.getCurrent().hashCode(), e.getValue());
+            FeedbackSheet feedbackSheet = new FeedbackSheet(sheetId,
+                    credentialFileName);
+            feedbackSheet.append(productName,"" + UI.getCurrent().hashCode(), e.getValue());
         });
 
         // Styling

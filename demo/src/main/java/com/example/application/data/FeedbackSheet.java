@@ -45,13 +45,9 @@ public class FeedbackSheet {
 
     private String sheetId;
 
-    private FeedbackSheet(String sheetId, String credentialsFilePath) {
+    public FeedbackSheet(String sheetId, String credentialsFilePath) {
         this.sheetId = sheetId;
         this.credentialsFilePath = credentialsFilePath;
-    }
-
-    public static FeedbackSheet getSheet(String sheetId, String credentialsFilePath) {
-        return new FeedbackSheet(sheetId, credentialsFilePath);
     }
 
     /**
